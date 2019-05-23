@@ -1,0 +1,47 @@
+---
+title: "ivdrugfinal"
+author: "Michael Monreal"
+date: "May 21, 2019"
+output: html_document
+---
+
+## Introduction
+A new  preventative aides (abacavirinol) is under test in clinical trials. Analyze the effectiveness of this drug across the board. Consider population subgroups by gender, drug use, and sexual orientation. 
+
+## Methods
+The methods used for this was chi-square and fisher test. We're going to look at bar plots and compare them to see if they are different visually then look at the numerical results.
+   
+```{r include=FALSE,echo=FALSE}
+require(tidyverse)
+require(tigerstats)
+avast <-read.csv(file="avastivironal.csv",header=TRUE)
+avast <-filter(avast, Ivdrug =="user")
+```
+
+```{r}
+results <- avast
+trialtbl=xtabs(~infected+treatment,data=results)
+```
+
+```{r}
+barchartGC(trialtbl,type = "percent")
+```
+
+```{r}
+colPerc(trialtbl)
+```
+
+```{r}
+rowPerc(trialtbl)
+```
+
+```{r}
+chisqtestGC(trialtbl, graph = TRUE)
+```
+
+```{r}
+fisher.test(trialtbl)
+```
+
+## Conclusion
+60% of people got aids. The drugs aren't working. The Fisher test proves this statement, which says that it improves the chances that you get aids if you use the drug. 
